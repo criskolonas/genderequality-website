@@ -1,0 +1,52 @@
+@media only screen and (min-width: 600px) {
+   .nav {
+    height: 100px !important;
+   }
+	 #sdglogo{
+		 height:100px;
+     margin-top: -9px;
+     margin-left: -60px;
+	 }
+
+	 .navbar-toggler-icon{
+		 height:100px;
+		 width: 100px;
+	 }
+	 .collapse navbar-collapse{
+	 }
+}
+}
+body{
+	background-color: #FAFAFA;
+}
+.navbar {
+  min-height: 80px;
+}
+
+
+
+.navbar-toggle {
+  /* (80px - button height 34px) / 2 = 23px */
+  margin-top: 23px;
+  padding: 9px 10px !important;
+}
+
+.navbar-nav >li {
+  padding-left: 30px;
+  padding-right: 30px;
+  font-size:25px;
+}
+/*centers card text */
+.col-sm {
+  text-align: center;
+}
+/* changes size and fits image inside its div */
+.card-img-top {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}
+/* arranges card distances */
+.card {
+  display: inline-block;
+}

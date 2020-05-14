@@ -74,16 +74,16 @@
               <button type="button" class="toggle-btn" onclick="register()">Register</button>
             </div>
 
-            <form id="login" action="php/log_reg.php" method="post" class="input-group">
+            <form id="login" action="php/login.php" method="post" class="input-group">
               <input type="text" class="input-field" name="usrid" placeholder="User ID" required>
               <input type="text" class="input-field" name="passwrd" placeholder="Enter password" required>
               <input type="checkbox" class="chech-box"><span  class="spanclass">Remember password</span>
               <button onclick="loginchoose(this.form)" class="submit-btn">Log in</button>
             </form>
-            <form id="register" action="log_reg.php" class="input-group">
-              <input type="text" class="input-field" placeholder="User ID" required>
-              <input type="email" class="input-field" placeholder="Email" required>
-              <input type="text" class="input-field" placeholder="Enter password" required>
+            <form id="register" action="register.php" method="post" class="input-group">
+              <input type="text" class="input-field" name="regid" placeholder="User ID" required>
+              <input type="email" class="input-field" name="regemail" placeholder="Email" required>
+              <input type="text" class="input-field" name="regpass" placeholder="Enter password" required>
               <input type="checkbox" class="chech-box"><span  class="spanclass">I agree to the terms & conditions</span>
               <button type="submit" class="submit-btn">Register</button>
             </form>

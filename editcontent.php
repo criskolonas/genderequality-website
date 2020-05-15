@@ -72,11 +72,14 @@
   <div  class="container-">
     <div class="jumbotron">
       <h1 class="display-4">Edit Content</h1>
-      <p class="lead">Here you can manipulate page content by adding or removing new sections.</p>
+      <p class="lead">Here you can manipulate page content by adding or removing new Articles.</p>
     </div>
     <div class="col-sm-12">
     </div>
   </div>
+  <!--Button for Creating new section -->
+  <button onclick="appendCard('New Article','Empty','https://designshack.net/wp-content/uploads/placeholder-image.png')" type="button" class="btn btn-primary">Add Article</button>
+
   <!-- Dropdown for Section Sorting-->
   <div id="sortdropdown" class="dropdown">
     <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -97,18 +100,26 @@
       <div class="container-fluid">
         <div class="row" id="card-container"></div>
       </div>
-      <!-- Add new section Card -->
-      <div class="col-sm">
-        <div class="card h-100 card-body" style="width: 18rem;">
-          <img class="card-img-top" src="https://designshack.net/wp-content/uploads/placeholder-image.png" alt="Card image cap">
-          <div class="card-body">
-            <button onclick="appendCard()" type="button" class="btn btn-primary">Add Section</button>
-          </div>
-        </div>
-      </div>
+
     </div>
   </div>
+
   <script src="js/editcontent.js"></script>
+  <?php
+  $link = mysqli_connect("127.0.0.1","root","", "genderequality_db");
+  $sql = "SELECT * FROM articles";
+  $result = mysqli_query($link,$sql);
+  while($row = mysqli_fetch_array($result))
+    {
+      $articleName=$row['ArticleName'];
+      $articleContent=$row['ArticleContent'];
+      $articleImage = $row['ArticleImage'];
+      echo "<script> appendCard('".$articleName."', '".$articleContent."', '".$articleImage."'); </script>";
+    }
+  // data processing
+
+
+  ?>
 
 </body>
 

@@ -1,5 +1,5 @@
 //Creates Section Card and events and returns the created card
-function createSectionCard() {
+function createSectionCard(aTitle,aContent,anImage) {
   //Creates HTML elements
   var card = document.createElement("div");
   card.className = "col-sm";
@@ -8,11 +8,12 @@ function createSectionCard() {
   cardbody.style.width = "18rem";
   var cardimage = document.createElement("img");
   cardimage.className = "card-img-top";
+  cardimage.src=anImage;
   var cardbody2 = document.createElement("div");
   cardbody2.className = "card-body";
   var cardtitle = document.createElement("p");
   cardtitle.className = "card-text";
-  cardtitle.textContent = "New Section";
+  cardtitle.textContent = aTitle;
   var cardeditbtn = document.createElement("button");
   cardeditbtn.type = "button";
   cardeditbtn.className = "btn btn-warning";
@@ -22,7 +23,7 @@ function createSectionCard() {
   carddeletebtn.className = "btn btn-danger";
   carddeletebtn.textContent = "Delete";
   carddeletebtn.addEventListener("click",function(){createDelEvent(card)});
-  cardeditbtn.addEventListener("click",function(){createEditEvent()});
+  cardeditbtn.addEventListener("click",function(){createEditEvent(aTitle,aContent)});
   //Binds created elements together
   cardbody2.appendChild(cardtitle);
   cardbody.appendChild(cardimage);
@@ -53,7 +54,7 @@ function createDelEvent(card) {
 };
 
 //Adds Event to create a modal box for section content editing
-function createEditEvent() {
+function createEditEvent(title,content) {
     var modal = document.createElement("div");
     modal.className = "modal";
     var modalbox = document.createElement("div");
@@ -66,12 +67,12 @@ function createEditEvent() {
     titlebox.className = "titlebox";
     titlebox.rows = 1;
     titlebox.cols = 15;
-    titlebox.value = "Add a title to your article";
+    titlebox.value = title;
     var textbox = document.createElement('textarea');
     textbox.className = "textbox";
     textbox.rows = 15;
     textbox.cols = 15;
-    textbox.value = "This is an Empty Section";
+    textbox.value = content;
     var imgupload = document.createElement("input");
     imgupload.setAttribute("type", "file");
     var modalcontainer = document.getElementById('modal-container');
@@ -90,7 +91,7 @@ function createEditEvent() {
 };
 
 //Appends created Card to HTML
-function appendCard() {
+function appendCard(title,content,image) {
   var cardContainer = document.getElementById('card-container');
-  cardContainer.appendChild(createSectionCard());
+  cardContainer.appendChild(createSectionCard(title,content,image));
 };

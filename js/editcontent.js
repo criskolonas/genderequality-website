@@ -62,6 +62,11 @@ function createEditEvent() {
     done.className = "btn btn-success";
     done.id = "donebtn";
     done.textContent = "Done";
+    var titlebox = document.createElement("textarea");
+    titlebox.className = "titlebox";
+    titlebox.rows = 1;
+    titlebox.cols = 15;
+    titlebox.value = "Add a title to your article";
     var textbox = document.createElement('textarea');
     textbox.className = "textbox";
     textbox.rows = 15;
@@ -70,6 +75,7 @@ function createEditEvent() {
     var imgupload = document.createElement("input");
     imgupload.setAttribute("type", "file");
     var modalcontainer = document.getElementById('modal-container');
+    modalbox.appendChild(titlebox);
     modalbox.appendChild(textbox);
     modalbox.appendChild(imgupload);
     modalbox.appendChild(done);

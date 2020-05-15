@@ -14,6 +14,15 @@
 </head>
 
 <body>
+
+  <?php
+  $link = mysqli_connect("localhost", "genderequality_db");
+
+  // data processing
+
+  mysqli_close($link);
+  ?>
+
   <!-- Navigation Bar-->
   <nav class="navbar navbar-expand-lg navbar-light  " style="background-color:  #59c0b6;">
     <a class="navbar-brand" href="index.html">
@@ -33,7 +42,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="myacc.html">Account Information</a>
-            <a class="dropdown-item" href="editcontent.html">Edit Content</a>
+            <a class="dropdown-item" href="editcontent.php">Edit Content</a>
             <a class="dropdown-item" href="editmembers.html">Edit Members</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="log_reg.html">Sign In</a>

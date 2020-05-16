@@ -1,8 +1,10 @@
+
 //Creates Section Card and events and returns the created card
-function createSectionCard(aTitle,aContent,anImage) {
+function createSectionCard(anId,aTitle,aContent,anImage) {
   //Creates HTML elements
   var card = document.createElement("div");
   card.className = "col-sm";
+  card.id = anId;
   var cardbody = document.createElement("div");
   cardbody.className = "card h-100 card-body";
   cardbody.style.width = "18rem";
@@ -91,7 +93,7 @@ function createEditEvent(title,content) {
 };
 
 //Appends created Card to HTML
-function appendCard(title,content,image) {
+function appendCard(id,title,content,image) {
   var cardContainer = document.getElementById('card-container');
-  cardContainer.appendChild(createSectionCard(title,content,image));
+  cardContainer.appendChild(createSectionCard(id,title,content,image));
 };

@@ -1,3 +1,7 @@
+<?php
+include 'php/connection.php';
+ ?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -11,17 +15,10 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <link href="css/editcontent.css" rel="stylesheet" type="text/css">
+
 </head>
 
 <body>
-
-  <?php
-  $link = mysqli_connect("localhost", "genderequality_db");
-
-  // data processing
-
-  mysqli_close($link);
-  ?>
 
   <!-- Navigation Bar-->
   <nav class="navbar navbar-expand-lg navbar-light  " style="background-color:  #59c0b6;">
@@ -91,35 +88,66 @@
     </div>
   </div>
 
-  <!-- Container for the modal -->
-  <div id="modal-container"></div>
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
   <div class="container-fluid">
     <div class="row">
       <!-- Dynamic Card Creation container --->
       <div class="container-fluid">
-        <div class="row" id="card-container"></div>
+        <div class="row" id="card-container">
+          <?php
+          $sql = "SELECT * FROM articles";
+          $result = mysqli_query($link,$sql);
+          while($row = mysqli_fetch_array($result))
+            {
+              $articleId =$row['ArticleId'];
+              $articleName=$row['ArticleName'];
+              $articleContent=$row['ArticleContent'];
+              $articleImage = $row['ArticleImage'];
+              echo '<div class="col-sm-3" id="'.$articleId.'">
+              <div class="card h-100 card-body" width="18rem">
+              <div class="card-body">
+              <img class="card-img-top" src="'.$articleImage.'">
+
+              <p class="card-text">'.$articleName.' </p>
+              <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning">Edit</button>
+              <button type="button" onclick="createDelEvent()" class="btn btn-danger">Delete</button>
+
+              </div>
+              </div>
+              </div>';
+            }
+
+          mysqli_close($link);
+          ?>
+
+        </div>
       </div>
 
     </div>
   </div>
 
   <script src="js/editcontent.js"></script>
-  <?php
-  $link = mysqli_connect("127.0.0.1","root","", "genderequality_db");
-  $sql = "SELECT * FROM articles";
-  $result = mysqli_query($link,$sql);
-  while($row = mysqli_fetch_array($result))
-    {
-      $articleName=$row['ArticleName'];
-      $articleContent=$row['ArticleContent'];
-      $articleImage = $row['ArticleImage'];
-      echo "<script> appendCard('".$articleName."', '".$articleContent."', '".$articleImage."'); </script>";
-    }
-  // data processing
 
-
-  ?>
 
 </body>
 

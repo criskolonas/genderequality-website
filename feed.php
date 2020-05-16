@@ -1,3 +1,7 @@
+<?php
+include 'php/connection.php';
+ ?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -11,6 +15,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <link href="admincss.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
     <!--<link rel="stylesheet" href="style.css">-->
     <link rel="stylesheet" type="text/css" href="css/feed.css">
   </head>
@@ -61,25 +67,24 @@
       </div>
     </nav>
 
-    <main>
-      <div class="row justify-content-around myrow">
-        <div class="col-sm-4 mycol">
-          <img src="http://placehold.it/350x300/59c0b6">
-          <img src="http://placehold.it/350x300/59c0b6">
-          <img src="http://placehold.it/350x300/59c0b6">
-        </div>
-        <div class="col-sm-4 mycol">
-          <img src="http://placehold.it/350x300/59c0b6">
-          <img src="http://placehold.it/350x300/59c0b6">
-          <img src="http://placehold.it/350x300/59c0b6">
-        </div>
-        <div class="col-sm-4 mycol">
-          <img src="http://placehold.it/350x300/59c0b6">
-          <img src="http://placehold.it/350x300/59c0b6">
-          <img src="http://placehold.it/350x300/59c0b6">
-        </div>
-      </div>
-    </main>
+  <div class="masonryholder">
+    <?php
+    $sql = "SELECT * FROM articles";
+    $result = mysqli_query($link,$sql);
+    while($row = mysqli_fetch_array($result))
+      {
+        $articleId =$row['ArticleId'];
+        $articleName=$row['ArticleName'];
+        $articleContent=$row['ArticleContent'];
+        $articleImage = $row['ArticleImage'];
+        echo '<div class="masonryblocks"><img src="'.$articleImage.'"><span class=text-center">'.$articleName.'</span></div>';
+      }
+
+    mysqli_close($link);
+      ?>
+</div>
+
+
     <footer id="colophon" class="site-footer" role="contentinfo">
       <div class="social-wrapper">
         <ul>

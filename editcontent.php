@@ -1,21 +1,53 @@
-<?php
-include 'php/connection.php';
- ?>
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
-  <title>Admininstration Page</title>
+  <title>Edit your Posts</title>
   <link rel="icon" href="images/genderequal.png" type="image/png" sizes="16x16">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <link href="css/editcontent.css" rel="stylesheet" type="text/css">
 
+  <script type="text/javascript">
+  //ajax request to delete specified article
+  function deleteArticle(articleId){
+    $(document).ready(function(){
+      $.ajax({
+          url:'articleDelete.php',
+          data:{'id':articleId},
+          success: function(Response){
+            location.reload();
+          }
+      });
+      });
+
+  };
+</script>
+<script type="text/javascript">
+//ajax request to view specified article
+function previewArticle(articleId){
+  $(document).ready(function(){
+    $.ajax({
+        url:'articlePreview.php',
+        dataType:"json",
+        data:{'id':articleId},
+        success: function(Response){
+          $('#arName').attr("value", Response.articleName);
+          $('#arContent').val(Response.articleContent);
+          $('#arImage').attr("value", Response.articleImage);
+        }
+    });
+    });
+
+};
+</script>
 </head>
 
 <body>
@@ -38,11 +70,11 @@ include 'php/connection.php';
             My Account
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="myacc.html">Account Information</a>
+            <a class="dropdown-item" href="myacc.php">Account Information</a>
             <a class="dropdown-item" href="editcontent.php">Edit Content</a>
-            <a class="dropdown-item" href="editmembers.html">Edit Members</a>
+            <a class="dropdown-item" href="editmembers.php">Edit Members</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="log_reg.html">Sign In</a>
+            <a class="dropdown-item" href="log_reg.php">Sign In</a>
           </div>
         </li>
 
@@ -52,7 +84,7 @@ include 'php/connection.php';
             Data
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item " href="feed.html">Feed</a>
+            <a class="dropdown-item " href="feed.php">Feed</a>
             <a class="dropdown-item " href="statistics.html">Statistics</a>
           </div>
         </li>
@@ -69,13 +101,13 @@ include 'php/connection.php';
   <div  class="container-">
     <div class="jumbotron">
       <h1 class="display-4">Edit Content</h1>
-      <p class="lead">Here you can manipulate page content by adding or removing new Articles.</p>
+      <p class="lead">Here you can manipulate feed content by adding, editing and removing Articles.</p>
     </div>
     <div class="col-sm-12">
     </div>
   </div>
   <!--Button for Creating new section -->
-  <button onclick="appendCard('New Article','Empty','https://designshack.net/wp-content/uploads/placeholder-image.png')" type="button" class="btn btn-primary">Add Article</button>
+  <button  type="button" class="btn btn-primary" id="cardbutton">Add Article</button>
 
   <!-- Dropdown for Section Sorting-->
   <div id="sortdropdown" class="dropdown">
@@ -83,72 +115,74 @@ include 'php/connection.php';
       Sort by
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="#">Date Added</a>
-      <a class="dropdown-item" href="#">Popularity</a>
+      <a class="dropdown-item" href="?sortBy=dateAdded">Date Added</a>
+      <a class="dropdown-item" href="?sortBy=clicks">Popularity</a>
     </div>
   </div>
 
   <!-- Modal -->
-  <div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <p>Some text in the modal.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit your post.</h4>
       </div>
-
+      <div class="modal-body">
+        <form class="" action="articleSubmit.php" method="post">
+          <div class="form-group">
+            <label for="name">Article Name</label>
+            <input type="text" id="arName" class="form-control" name="name" >
+          </div>
+          <div class="form-group">
+            <label for="arContent">Article Content</label>
+          <textarea class="form-control" id="arContent" rows="20"></textarea>
+        </div>
+          <div>
+            <label for="image">Article Image</label>
+            <input type="text" id="arImage" class="form-control" name="image" placeholder="Paste your image URL here">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="#savebtn" class="btn btn-success" data-dismiss="modal">Save Changes</button>
+      </div>
     </div>
   </div>
+</div>
 
   <div class="container-fluid">
     <div class="row">
       <!-- Dynamic Card Creation container --->
       <div class="container-fluid">
         <div class="row" id="card-container">
-          <?php
-          $sql = "SELECT * FROM articles";
-          $result = mysqli_query($link,$sql);
-          while($row = mysqli_fetch_array($result))
-            {
-              $articleId =$row['ArticleId'];
-              $articleName=$row['ArticleName'];
-              $articleContent=$row['ArticleContent'];
-              $articleImage = $row['ArticleImage'];
-              echo '<div class="col-sm-3" id="'.$articleId.'">
-              <div class="card h-100 card-body" width="18rem">
-              <div class="card-body">
-              <img class="card-img-top" src="'.$articleImage.'">
-
-              <p class="card-text">'.$articleName.' </p>
-              <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning">Edit</button>
-              <button type="button" onclick="createDelEvent()" class="btn btn-danger">Delete</button>
-
-              </div>
-              </div>
-              </div>';
-            }
-
-          mysqli_close($link);
-          ?>
-
+          <?php include 'showCards.php'; ?>
         </div>
       </div>
 
     </div>
   </div>
+  <script>
+  $(document).ready(function(){
+        $('#cardbutton').click(function(){
+            $.ajax({
+                url:'card.php',
+                dataType: "html",
+                success: function(Response){
+                  location.reload();
+                }
+            });
+        });
+    });
+  </script>
+
 
   <script src="js/editcontent.js"></script>
 
 
+
 </body>
+
 
 </html>

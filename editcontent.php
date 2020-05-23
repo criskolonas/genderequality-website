@@ -39,9 +39,10 @@ function previewArticle(articleId){
         dataType:"json",
         data:{'id':articleId},
         success: function(Response){
-          $('#arName').attr("value", Response.articleName);
+          $('#update_id').val(articleId);
+          $('#arName').val(Response.articleName);
           $('#arContent').val(Response.articleContent);
-          $('#arImage').attr("value", Response.articleImage);
+          $('#arImage').val(Response.articleImage);
         }
     });
     });
@@ -88,6 +89,9 @@ function previewArticle(articleId){
             <a class="dropdown-item " href="statistics.html">Statistics</a>
           </div>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact Us</a>
+        </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -130,39 +134,39 @@ function previewArticle(articleId){
         <h4 class="modal-title">Edit your post.</h4>
       </div>
       <div class="modal-body">
-        <form class="" action="articleSubmit.php" method="post">
+        <form class="dataupd" action="articleUpdate.php" action="GET">
+          <input type="hidden"  name="update_id" id="update_id">
           <div class="form-group">
             <label for="name">Article Name</label>
-            <input type="text" id="arName" class="form-control" name="name" >
+            <input type="text" id="arName" class="form-control" name="aname" >
           </div>
           <div class="form-group">
             <label for="arContent">Article Content</label>
-          <textarea class="form-control" id="arContent" rows="20"></textarea>
+          <textarea class="form-control" id="arContent" name="content" rows="20"></textarea>
         </div>
           <div>
             <label for="image">Article Image</label>
             <input type="text" id="arImage" class="form-control" name="image" placeholder="Paste your image URL here">
           </div>
+          <div class="modal-footer">
+            <button type="submit" id="#savebtn" class="btn btn-success" >Save Changes</button>
+          </div>
         </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" id="#savebtn" class="btn btn-success" data-dismiss="modal">Save Changes</button>
-      </div>
+
     </div>
   </div>
 </div>
 
-  <div class="container-fluid">
     <div class="row">
       <!-- Dynamic Card Creation container --->
       <div class="container-fluid">
-        <div class="row" id="card-container">
+        <div class="card-deck" id="card-container">
           <?php include 'showCards.php'; ?>
         </div>
       </div>
 
     </div>
-  </div>
   <script>
   $(document).ready(function(){
         $('#cardbutton').click(function(){
@@ -176,9 +180,6 @@ function previewArticle(articleId){
         });
     });
   </script>
-
-
-  <script src="js/editcontent.js"></script>
 
 
 

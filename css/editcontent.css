@@ -49,6 +49,7 @@ body{
 /* arranges card distances */
 .card {
   display: inline-block;
+  padding-bottom:100px !important;
 }
 
 

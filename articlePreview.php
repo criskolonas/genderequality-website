@@ -10,7 +10,7 @@
  $articleContent=$row['ArticleContent'];
  $articleImage = $row['ArticleImage'];
  $articleDate = $row['ArticleDate'];
- echo json_encode(array("articleName"=>$articleName,"articleImage"=>$articleImage,"articleContent"=>$articleContent));
+ echo json_encode(array("articleId"=>$articleId,"articleName"=>$articleName,"articleImage"=>$articleImage,"articleContent"=>$articleContent));
 
 
  mysqli_close($link);
